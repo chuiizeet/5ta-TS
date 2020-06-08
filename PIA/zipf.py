@@ -5,9 +5,13 @@ import src.visual as sv
 try:
     sv.ZipfLaw(path=("dictionary1.txt", "./data/wordcount.json"))
     print(
-        "------------------------------------------------------------------------------------------------------------")
-    sv.ZipfLaw(path=("oil_bourse.txt", "./data/wordcount.json"))
+        "-------------------------------------------------------------------------------------------")
+    #sv.ZipfLaw(path=("oil_bourse.txt", "./data/wordcount.json"))
 
+    print(
+        "-------------------------------------------------------------------------------------------")
+    print(
+        "-------------------------------------------------------------------------------------------")
     print("REFERENCES")
     print("http://www.mathnet.ru/links/c6d04548ffd7ea92149c511a1190b1f5/da511.pdf")
     print("http://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=da&paperid=511&option_lang=eng")

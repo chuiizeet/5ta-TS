@@ -119,19 +119,21 @@ class ZipfLaw:
         print("||                           3. THE SINGLE-PASS COMPRESSION SCHEME                       ||")
         print("===========================================================================================")
 
+        count = 1
         li = {}
-        count = self.DictionaryVolume
         for key in self.Frequencies.keys():
-            li.update({key: -math.log10((C * self.DictionaryVolume) / count)})
-            count -= 1
+            if key not in li.keys():
+                a = 1 / math.log(self.DictionaryVolume)
+                li.update({key: -math.log10((a / count))})
+                count += 1
 
         Ksp = 0
         for key in li:
-            Ksp *= li[key]
+            Ksp += li[key]
 
         print(li)
         print(Ksp)
-
+        print(((Ksp * 8) / self.fileSize) * 100)
 
 
 if __name__ == '__main__':
