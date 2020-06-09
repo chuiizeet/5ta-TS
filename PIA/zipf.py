@@ -3,19 +3,19 @@ import sys
 import src.visual as sv
 
 try:
-    sv.ZipfLaw(path=("dictionary1.txt", "./data/wordcount.json"))
+    sv.ZipfLaw(path=("dictionary1.txt", "./data/wordcount.json"), path2="binaryOutput1.txt")
     print(
         "-------------------------------------------------------------------------------------------")
-    sv.ZipfLaw(path=("dictionary2.txt", "./data/wordcount.json"))
+    sv.ZipfLaw(path=("dictionary2.txt", "./data/wordcount.json"), path2="binaryOutput2.txt")
     print(
         "-------------------------------------------------------------------------------------------")
-    sv.ZipfLaw(path=("dictionary3.txt", "./data/wordcount.json"))
+    sv.ZipfLaw(path=("dictionary3.txt", "./data/wordcount.json"), path2="binaryOutput3.txt")
     print(
         "-------------------------------------------------------------------------------------------")
-    sv.ZipfLaw(path=("dictionary4.txt", "./data/wordcount.json"))
+    sv.ZipfLaw(path=("dictionary4.txt", "./data/wordcount.json"), path2="binaryOutput4.txt")
     print(
         "-------------------------------------------------------------------------------------------")
-    sv.ZipfLaw(path=("dictionary5.txt", "./data/wordcount.json"))
+    sv.ZipfLaw(path=("dictionary5.txt", "./data/wordcount.json"), path2="binaryOutput5.txt")
     print(
         "-------------------------------------------------------------------------------------------")
 

@@ -1,17 +1,49 @@
 import sys
-import json
-import collections
+from functools import total_ordering
 from collections import Counter
 import math
 
 
+@total_ordering
+class Word:
+
+    def __init__(self, name, freq) -> None:
+        self._name = name
+        self._freq = freq
+        self._code = ""
+
+    def __lt__(self, other):
+        return True if self._freq < other.get_freq() else False
+
+    def __eq__(self, other):
+        return True if self._name == other.get_name() and self._freq == other.get_freq() else False
+
+    def __str__(self):
+        return "{0}\t {1}\t {2}".format(self._name, str(self._freq), self._code)
+
+    def __iter__(self):
+        return self
+
+    def get_name(self):
+        return self._name
+
+    def get_freq(self):
+        return self._freq
+
+    def get_code(self):
+        return self._code
+
+    def append_code(self, code):
+        self._code += str(code)
+
+
 class ZipfLaw:
 
-    def __init__(self, path=("", "./data/wordcount.json")):
+    def __init__(self, path=("", "./data/wordcount.json"), path2=""):
         self.TotalWords = 0
         self.Frequencies = {}
         self.fileSize = 0
-
+        self.path2 = path2
         try:
             self.path = sys.argv[1]
         except IndexError:
@@ -49,6 +81,10 @@ class ZipfLaw:
         sumPi = 0
         for key in probabilities.keys():
             sumPi += probabilities[key] * (-math.log10(probabilities[key]))
+
+        listProbabilities = []
+        for key in probabilities:
+            listProbabilities.append(Word(key, probabilities[key]))
 
         print("Cantidad total de palabras en el texto:")
         print(self.TotalWords)
@@ -138,6 +174,50 @@ class ZipfLaw:
         print(li)
         print(Ksp)
         print(((Ksp * 8) / self.fileSize) * 100)
+
+        shannon(listProbabilities)
+
+        h = l = 0
+        for c in listProbabilities:
+            h += c.get_freq() * math.log2(c.get_freq())
+            l += c.get_freq() * len(c.get_code())
+
+        binarystr = ""
+        for word in listProbabilities:
+            binarystr += word.get_code()
+
+        binaryOutputFile = open(self.path2, 'w')
+        binaryOutputFile.write(binarystr)
+        binaryOutputFile.close()
+
+
+def find_middle(lst):
+    if len(lst) == 1: return None
+    s = k = b = 0
+    for p in lst: s += p.get_freq()
+    s /= 2
+    for p in range(len(lst)):
+        k += lst[p].get_freq()
+        if k == s:
+            return p
+        elif k > s:
+            j = len(lst) - 1
+            while b < s:
+                b += lst[j].get_freq()
+                j -= 1
+            return p if abs(s - k) < abs(s - b) else j
+    return
+
+
+def shannon(lst):
+    middle = find_middle(lst)
+    if middle is None: return
+    for i in lst[: middle + 1]:
+        i.append_code(0)
+    shannon(lst[: middle + 1])
+    for i in lst[middle + 1:]:
+        i.append_code(1)
+    shannon(lst[middle + 1:])
 
 
 if __name__ == '__main__':
