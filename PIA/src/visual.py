@@ -25,7 +25,7 @@ class ZipfLaw:
 		print("||                                   1. THE ZIPF LAW                                     ||")
 		print("===========================================================================================")
 		print("Palabras con frecuencias ordenadas de menor a mayor")
-		# print(self.Frequencies)
+		print(self.Frequencies)
 		self.fileSize = data.__sizeof__()
 		self.TotalWords = len(wordList)
 		self.DictionaryVolume = len(self.Frequencies.keys())
@@ -59,7 +59,7 @@ class ZipfLaw:
 		print("Nueva Constante")
 		print(C)
 		print("Probabilidades")
-		# print(probabilities)
+		print(probabilities)
 		print("===========================================================================================")
 		print("||          2.-CODING WORDS, UNIFORMLY AND NONUNIFORMLY WITH RESPECT TO OUTPUT           ||")
 		print("===========================================================================================")
@@ -97,10 +97,6 @@ class ZipfLaw:
 		#                                    math.log(self.DictionaryVolume + 1) + math.log(2)) + 0.577 * (
 		#                                    math.log(2) * math.log(self.DictionaryVolume + 1)) + (
 		#                                    math.pow(0.577, 2) / math.log(self.DictionaryVolume + 1)))
-
-		print("b1 final")
-		print(B1final)
-
 		n1 = B1 / self.fileSize
 		n2 = B2 / self.fileSize
 		bitsTotales = self.fileSize * 8
