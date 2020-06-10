@@ -190,7 +190,7 @@ class ZipfLaw:
         count = len(listProbabilities) - 1
         count2 = 0
         for word in listProbabilities:
-            print(listProbabilities[count].get_name(), "||", listProbabilities[count2].get_freq(), "||", listProbabilities[count].get_code())
+            # print(listProbabilities[count].get_name(), "||", listProbabilities[count2].get_freq(), "||", listProbabilities[count].get_code())
             binarystr += word.get_code()
             count -= 1
             count2 += 1
@@ -198,6 +198,63 @@ class ZipfLaw:
         binaryOutputFile = open(self.path2, 'w')
         binaryOutputFile.write(binarystr)
         binaryOutputFile.close()
+
+        si_order = []
+        fi_order = []
+        Fi_order = []
+        li_order = []
+        wi_order = []
+
+        for key in probabilities.keys():
+            si_order.append(key)
+            li_order.append(math.ceil(-math.log2(probabilities[key])))
+        # print(self.Frequencies[key])
+
+        for key in self.Frequencies.keys():
+            fi_order.append("{} / {}".format(self.Frequencies[key], self.TotalWords))
+
+        print('FI')
+        current_Fi_sum = 0
+        for e, key in enumerate(self.Frequencies.keys()):
+
+            if e == 0:
+                pass
+            elif e == 1:
+                # print(self.Frequencies[si_order[e-1]])
+                current_Fi_sum += self.Frequencies[si_order[e - 1]]
+            else:
+                current_Fi_sum += self.Frequencies[si_order[e - 1]]
+            Fi_order.append(current_Fi_sum)
+        # print(e)
+        print(fi_order)
+        print(Fi_order)
+
+        print('Neal Koblitz')
+        for e, l in enumerate(li_order):
+            b = ''
+            arrArray = []
+            arr = Fi_order[e] * 2
+            while len(b) < l:
+                # Entra
+                # if arr in arrArray:
+                # 	print(True)
+                arrArray.append(arr)
+
+                if arr < self.TotalWords:
+                    b = b + '0'
+                    arr = arr * 2
+                else:
+                    b = b + '1'
+                    arr = arr / self.TotalWords
+
+            wi_order.append(b)
+
+        count = len(si_order) - 1
+        for e, s in enumerate(si_order):
+            print("S{} {} \t f{} {} \t F{} {} \t l{} {} \t w{} {}".format(e, s, e, fi_order[e], e, Fi_order[e], e,
+                                                                          li_order[e], e,
+                                                                          listProbabilities[count].get_code()))
+            count -= 1
 
 
 def find_middle(lst):
