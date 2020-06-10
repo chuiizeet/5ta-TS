@@ -1,9 +1,9 @@
 import sys
+import math
 import json
 import collections
 from collections import Counter
-import math
-
+from src.utils import float_bin, checkIfDuplicates_2
 
 class ZipfLaw:
 
@@ -131,41 +131,33 @@ class ZipfLaw:
 
 		print('FI')
 		current_Fi_sum = 0
-		for e,key in enumerate(self.Frequencies.keys()):
-			
+		for e,key in enumerate(probabilities.keys()):			
 			if e == 0:
 				pass
 			elif e == 1:
-				# print(self.Frequencies[si_order[e-1]])
-				current_Fi_sum += self.Frequencies[si_order[e-1]]
+				current_Fi_sum += probabilities[si_order[e-1]]
 			else:
-				current_Fi_sum += self.Frequencies[si_order[e-1]]
+				current_Fi_sum += probabilities[si_order[e-1]]
 			Fi_order.append(current_Fi_sum)
-				# print(e)
-		print(fi_order)
-		print(Fi_order)
 
-		print('Neal Koblitz')
+		# for p in Fi_order:
+		# 	print(p)
+
+		arrArray = []
+		binarios = []
 		for e,l in enumerate(li_order):
 			b = ''
-			arrArray = []
-			arr = Fi_order[e] * 2
+			del arrArray[:]
 			while len(b) < l:
-				# Entra
-				# if arr in arrArray:
-				# 	print(True)
-				arrArray.append(arr)
 
-				if arr < self.TotalWords:
+				if e == 0:
 					b = b + '0'
-					arr = arr * 2
 				else:
-					b = b + '1'
-					arr = arr / self.TotalWords
+					data = Fi_order[e]
+					b = float_bin(data,l+1)
 			
 			wi_order.append(b)
 
-		# print(wi_order)
 		shannon_path = self.path + '_shannon' + '.txt'
 		with open(shannon_path, "w") as txt_file:
 			for line in wi_order:
@@ -175,7 +167,6 @@ class ZipfLaw:
 		for e,s in enumerate(si_order):
 			print("S{} {} \t f{} {} \t F{} {} \t l{} {} \t w{} {}".format(e,s,e,fi_order[e],e,Fi_order[e],e,li_order[e],e,wi_order[e]))
 
-		print("Wi")
 		for e,t in enumerate(wi_order):
 			print("{}\t{}".format(si_order[e], t))
 
