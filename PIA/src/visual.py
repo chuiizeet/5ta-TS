@@ -175,16 +175,25 @@ class ZipfLaw:
         print(Ksp)
         print(((Ksp * 8) / self.fileSize) * 100)
 
+        listProbabilities = sorted(listProbabilities)
+
         shannon(listProbabilities)
 
         h = l = 0
-        for c in listProbabilities:
+        for c in reversed(listProbabilities):
             h += c.get_freq() * math.log2(c.get_freq())
             l += c.get_freq() * len(c.get_code())
 
+        print("Shannon")
+
         binarystr = ""
+        count = len(listProbabilities) - 1
+        count2 = 0
         for word in listProbabilities:
+            print(listProbabilities[count].get_name(), "||", listProbabilities[count2].get_freq(), "||", listProbabilities[count].get_code())
             binarystr += word.get_code()
+            count -= 1
+            count2 += 1
 
         binaryOutputFile = open(self.path2, 'w')
         binaryOutputFile.write(binarystr)
